@@ -37,7 +37,6 @@ class LRUCache(BaseCaching):
                 len(self.cache_data.keys()) == BaseCaching.MAX_ITEMS and
                 (key in self.cache_data.keys())
             ):
-
                 self.ordered_cache_keys.remove(key)
                 self.ordered_cache_keys.append(key)
                 self.cache_data[key] = item
@@ -52,4 +51,6 @@ class LRUCache(BaseCaching):
         if key not in self.cache_data.keys():
             return None
         else:
+            self.ordered_cache_keys.remove(key)
+            self.ordered_cache_keys.append(key)
             return self.cache_data[key]
