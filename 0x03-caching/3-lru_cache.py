@@ -33,7 +33,7 @@ class LRUCache(BaseCaching):
                 del self.cache_data[lru]
                 self.cache_data[key] = item
                 self.ordered_cache_keys.append(key)
-            if (
+            elif (
                 len(self.cache_data.keys()) == BaseCaching.MAX_ITEMS and
                 (key in self.cache_data.keys())
             ):
