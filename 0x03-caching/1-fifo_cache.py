@@ -23,7 +23,7 @@ class FIFOCache(BaseCaching):
         """
         if not (key is None or item is None):
             if (
-                len(self.cache_data.keys()) == 4 and
+                len(self.cache_data.keys()) == BaseCaching.MAX_ITEMS and
                 (key not in self.cache_data.keys())
             ):
                 first = sorted(self.cache_data.keys())[0]
