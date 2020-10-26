@@ -13,11 +13,6 @@ class BasicCache(BaseCaching):
       - has a get method that returns the value of a given key from the cache.
     """
 
-    def __init__(self):
-        """ Initialize.
-        """
-        super().__init__()
-
     def put(self, key, item):
         """ Add an item in the cache
         """
