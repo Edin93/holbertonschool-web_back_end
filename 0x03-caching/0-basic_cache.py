@@ -1,23 +1,28 @@
 #!/usr/bin/python3
-""" BasicCache """
+"""
+BasicCache module.
+"""
 
 BaseCaching = __import__('base_caching').BaseCaching
 
 
 class BasicCache(BaseCaching):
-    """ BasicCache Class """
+    """
+        BasicCache class.
+    """
+
     def put(self, key, item):
         """
-        assign to the dictionary self.cache_data
-        the item value for the key key
+            Add an item in the cache.
         """
-        if key is not None and item is not None:
+        if not (key is None or item is None):
             self.cache_data[key] = item
 
     def get(self, key):
         """
-        return the value of key in self.cache_data
+            Get an item by key.
         """
-        if key in self.cache_data:
+        if key not in self.cache_data.keys():
+            return None
+        else:
             return self.cache_data[key]
-        return None
