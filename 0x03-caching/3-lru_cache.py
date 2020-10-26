@@ -2,7 +2,7 @@
 """
 LRUCache module.
 """
-from collections import OrderedDict 
+from collections import OrderedDict
 
 
 BaseCaching = __import__('base_caching').BaseCaching
