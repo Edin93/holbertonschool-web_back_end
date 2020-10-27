@@ -32,7 +32,10 @@ class LFUCache(BaseCaching):
                         self.keys_usage_frequency.items(), key=lambda el: el[1]
                         )
                 }
-                lru = ordered_keys_by_value.keys()[0]
+                print("ordered_keys_by_value")
+                print(ordered_keys_by_value)
+                print(ordered_keys_by_value.keys())
+                lfu = list(ordered_keys_by_value.keys())[0]
                 print('DISCARD: {}'.format(lfu))
                 del self.keys_usage_frequency[lfu]
                 del self.cache_data[lfu]
