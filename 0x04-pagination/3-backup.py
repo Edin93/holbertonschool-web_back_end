@@ -52,17 +52,16 @@ class Server:
         dataset = self.indexed_dataset()
         data_keys = sorted(dataset.keys())
         data_amount = len(data_keys)
-        assert type(index) is int and index >= 0 and index < data_amount
+        assert index >= 0 and index < data_amount
         d_index = data_keys[index]
         d_next_index = None
         d_page_size = 0
         d_data = []
-        c = 0
-        while c < page_size:
-            k = d_index + c
-            idx = data_keys[k]
-            d_data.append(dataset[idx])
-            c += 1
+        i = 0
+        while i < page_size:
+            k = d_index + i
+            d_data.append(dataset[k])
+            i += 1
         if d_data:
             d_page_size = len(d_data)
         if index >= 0 and index + d_page_size < data_amount - 1:
