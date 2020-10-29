@@ -27,7 +27,18 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-            pass
+        """Returns a list of inner lists, where each inner list represents
+        a data row from the dataset.
+        """
+        assert type(page_size) is int and type(page) is int
+        assert page > 0
+        assert page_size > 0
+        self.dataset()
+        r = index_range(page, page_size)
+        if r[0] >= len(self.__dataset):
+            return []
+        else:
+            return self.__dataset[r[0]:r[1]]
 
 
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
