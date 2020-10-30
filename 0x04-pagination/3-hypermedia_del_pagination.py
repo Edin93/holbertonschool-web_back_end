@@ -50,51 +50,27 @@ class Server:
         - data: the actual page of the dataset
         """
         dataset = self.indexed_dataset()
-        data_keys = list(dataset.keys())
-        data_amount = len(data_keys)
-        index_keys = []
-
-        assert type(index) is int and index in range(len(dataset))
-
-        for i in range(data_amount):
-            key = data_keys[i]
-            index_keys.append(key)
-
-        # d_index = index_keys[index]
-        d_index = index_keys[index]
-        # print('d_index = {}'.format(d_index))
+        d_index = None
         d_next_index = None
         d_page_size = 0
         d_data = []
 
-        print('~~~~~~~~~~~~~~~~~~~~~~~~~~')
-        k = data_keys[:10]
-        for i in k:
-            print('name[{}] = {}'.format(i, dataset[i]))
-        print('~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        assert type(index) is int and index in range(len(dataset))
 
-        # print('~~~~~~~~~~~~~~~~~~~~~~~~~~')
-        # for i in index_keys[:10]:
-        #     print('[{} -> {}]'.format(i, data_keys[i]))
-        # print('~~~~~~~~~~~~~~~~~~~~~~~~~~')
-
+        d_index = index
         c = 0
-        while c < page_size and index + c < data_amount:
-            key = index_keys[index + c]
-            d_data.append(dataset[key])
-            c += 1
-            if c == page_size and index + c < data_amount - 1:
-                d_next_index = index_keys[index + c]
+        i = 0
+
+        while c < page_size and i < len(dataset):
+            if (i + index) in dataset:
+                d_data.append(dataset[index + i])
+                c += 1
+            i += 1
 
         if d_data:
             d_page_size = len(d_data)
 
-        # if c + d_index < data_amount:
-            # d_next_index = c + index
-
-        # if index + c < data_amount:
-        #     d_next_index = index_keys[index + c]
-
+        d_next_index = index + i
         d = {
             'index': index,
             'next_index': d_next_index,
