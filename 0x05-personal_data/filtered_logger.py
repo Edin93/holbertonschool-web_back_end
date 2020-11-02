@@ -11,5 +11,5 @@ def filter_datum(fields: List[str],
                  message: str,
                  separator: str) -> str:
     '''Returns a log message.'''
-    return (';'.join(x if x.split('=')[0] not in fields else re.sub(
+    return (separator.join(x if x.split('=')[0] not in fields else re.sub(
         r'=.*', '=' + redaction, x) for x in message.split(separator)))
