@@ -21,9 +21,9 @@ class RedactingFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         '''Returns a log'''
-        logging.basicConfig(level=record.levelname, format=self.FORMAT)
-        return logging.info(filter_datum(self.fields, self.REDACTION,
-                            record.msg, self.SEPARATOR))
+        msg = logging.Formatter(self.FORMAT).format(record)
+        return filter_datum(self.fields, self.REDACTION,
+                            msg, self.SEPARATOR)
 
 
 def filter_datum(fields: List[str],
