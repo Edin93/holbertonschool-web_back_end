@@ -6,7 +6,7 @@ import re
 from typing import List
 
 
-def filter_datum(fields: List, redaction: str, msg: str, sep: str) -> str:
-    '''Returns a log msg.'''
+def filter_datum(fields: List, redaction: str, message: str, separator: str) -> str:
+    '''Returns a log message.'''
     return (';'.join(x if x.split('=')[0] not in fields
-            else re.sub(r'=.*', '=' + redaction, x) for x in msg.split(sep)))
+            else re.sub(r'=.*', '=' + redaction, x) for x in message.split(separator)))
