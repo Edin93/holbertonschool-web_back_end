@@ -36,8 +36,8 @@ def filter_datum(fields: List[str],
                  message: str,
                  separator: str) -> str:
     '''Returns a log message.'''
-    return (separator.join(x if x.split('=')[0] not in fields else re.sub(
-        r'=.*', '=' + redaction, x) for x in message.split(separator)))
+    print('fields = {}'.format(fields)
+    return (separator.join(x if x.split('=')[0] not in fields else re.sub(r'=.*', '=' + redaction, x) for x in message.split(separator)))
 
 
 def get_logger() -> logging.Logger:

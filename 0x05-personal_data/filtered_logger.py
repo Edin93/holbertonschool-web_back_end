@@ -49,7 +49,7 @@ def get_logger() -> logging.Logger:
     stream_handler = logging.StreamHandler()
     stream_handler.setLevel(logging.INFO)
 
-    formatter = logging.Formatter(RedactingFormatter(PII_FIELDS))
+    formatter = RedactingFormatter(PII_FIELDS)
     stream_handler.setFormatter(formatter)
 
     logger.addHandler(stream_handler)
@@ -74,24 +74,27 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     return cnx
 
 
-if __name__ == "__main__":
+def main() -> None:
+    """Obtains a database connection using get_db and retrieve all rows
+    in the users table and display each row under a filtered format.
+    """
     db = get_db()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users")
     records = cursor.fetchall()
+    logger = get_logger()
+
+    fields = [x[0] for x in cursor.description]
 
     for row in records:
         msg = ''
-        for i in range(5):
-            msg += PII_FIELDS[i] + '=' + row[i] + ';'
-        msg += 'ip={};last_login={};user_agent={};'.format(
-                row[5], row[6], row[7])
-        # print(msg)
-        # print(RedactingFormatter(PII_FIELDS))
-        record = logging.LogRecord('user_data', logging.INFO, None, None,
-                                   msg, None, None)
-        formatter = RedactingFormatter(PII_FIELDS)
-        print(formatter.format(record))
+        for i in range(len(fields)):
+            msg += fields[i] + '=' + str(row[i]) + ';'
+        logger.info(msg)
 
     cursor.close()
     db.close()
+
+
+if __name__ == "__main__":
+    main()
