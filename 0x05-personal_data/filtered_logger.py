@@ -72,3 +72,26 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     )
 
     return cnx
+
+
+if __name__ == "__main__":
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users")
+    records = cursor.fetchall()
+
+    for row in records:
+        msg = ''
+        for i in range(5):
+            msg += PII_FIELDS[i] + '=' + row[i] + ';'
+        msg += 'ip={};last_login={};user_agent={};'.format(
+                row[5], row[6], row[7])
+        # print(msg)
+        # print(RedactingFormatter(PII_FIELDS))
+        record = logging.LogRecord('user_data', logging.INFO, None, None,
+                                   msg, None, None)
+        formatter = RedactingFormatter(PII_FIELDS)
+        print(formatter.format(record))
+
+    cursor.close()
+    db.close()
