@@ -44,7 +44,7 @@ class BasicAuth(Auth):
             return None
         try:
             result = base64.b64decode(base64_authorization_header)
-            return result.decode()
+            return result.decode('utf-8')
         except Exception as e:
             return None
 
@@ -93,18 +93,15 @@ class BasicAuth(Auth):
         if auth_header is None:
             return None
 
-        print(auth_header)
         b64_auth_header = self.extract_base64_authorization_header(auth_header)
         if b64_auth_header is None:
             return None
 
-        print(b64_auth_header)
-        decoded_b64_auth_header = self.decode_base64_authorization_header
-        (b64_auth_header)
+        decoded_b64_auth_header = self.decode_base64_authorization_header(
+            b64_auth_header)
         if decoded_b64_auth_header is None:
             return None
 
-        print(decoded_b64_auth_header)
         creds = self.extract_user_credentials(decoded_b64_auth_header)
         if creds is None:
             return None
@@ -113,7 +110,4 @@ class BasicAuth(Auth):
         if user_obj is None:
             return None
 
-        # print('--------------------------')
-        # print(user_obj)
-        # print('--------------------------')
         return user_obj
