@@ -76,8 +76,8 @@ class BasicAuth(Auth):
         user_credentials = {
             'email': user_email,
         }
-        # user = User()
-        result = User.search(user_credentials)
+        user = User()
+        result = user.search(user_credentials)
         if not result:
             return None
         user = result[0]
