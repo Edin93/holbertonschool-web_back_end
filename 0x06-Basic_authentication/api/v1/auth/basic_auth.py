@@ -110,7 +110,4 @@ class BasicAuth(Auth):
         if user_obj is None:
             return None
 
-        print('--------------------------')
-        print(user_obj)
-        print('--------------------------')
         return user_obj
