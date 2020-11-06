@@ -48,9 +48,6 @@ def before_request():
     Executed before each request that is handled by a function of the
     Blueprint.
     """
-    # print('-----------------')
-    # print(request)
-    # print('-----------------')
     excluded_paths = [
         '/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/'
     ]
