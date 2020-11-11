@@ -3,6 +3,7 @@
 Contains Auth class.
 """
 from flask import request
+from os import getenv
 from typing import List, TypeVar
 
 
@@ -55,4 +56,5 @@ class Auth:
         """
         if request is None:
             return None
-        return request.cookies.get('_my_session_id', None)
+        cookie_name = getenv('SESSION_NAME')
+        return request.cookies.get(cookie_name, None)
