@@ -6,7 +6,7 @@ from api.v1.auth.session_auth import SessionAuth
 from os import getenv
 import uuid
 from models.user import User
-import datetime
+from datetime import datetime, timedelta
 
 
 class SessionExpAuth(SessionAuth):
@@ -18,6 +18,7 @@ class SessionExpAuth(SessionAuth):
         """
         Constructor.
         """
+        super()
         if not getenv('SESSION_DURATION'):
             self.session_duration = 0
         else:
@@ -48,13 +49,14 @@ class SessionExpAuth(SessionAuth):
         """
         if session_id is None:
             return None
-        if session_id not in self.user_id_by_session_id:
+        if session_id not in self.user_id_by_session_id.keys():
             return None
-        dic = self.user_id_for_session_id.get(session_id)
+        dic = self.user_id_by_session_id.get(session_id, None)
         if self.session_duration == 0:
             return dic.user_id
-        if 'created_at' not in dic:
+        if 'created_at' not in dic.keys():
             return None
-        if dic.created_at + self.session_duration < datatime.now():
+        timing = timedelta(seconds=self.session_duration) + dic['created_at']
+        if timing < datetime.now():
             return None
-        return dic.user_id
+        return dic.get('user_id', None)
