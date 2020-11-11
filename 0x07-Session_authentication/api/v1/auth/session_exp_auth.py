@@ -52,7 +52,7 @@ class SessionExpAuth(SessionAuth):
             return None
         dic = self.user_id_by_session_id.get(session_id, None)
         if self.session_duration <= 0:
-            return dic.user_id
+            return dic['user_id']
         if 'created_at' not in dic.keys():
             return None
         timing = timedelta(seconds=self.session_duration) + dic['created_at']
