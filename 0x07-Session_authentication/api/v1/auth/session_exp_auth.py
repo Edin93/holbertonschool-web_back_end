@@ -23,8 +23,7 @@ class SessionExpAuth(SessionAuth):
             self.session_duration = 0
         else:
             try:
-                n = int(getenv('SESSION_DURATION'))
-                self.session_duration = n
+                self.session_duration = int(getenv('SESSION_DURATION'), 0)
             except Exception as e:
                 self.session_duration = 0
 
@@ -52,7 +51,7 @@ class SessionExpAuth(SessionAuth):
         if session_id not in self.user_id_by_session_id.keys():
             return None
         dic = self.user_id_by_session_id.get(session_id, None)
-        if self.session_duration == 0:
+        if self.session_duration <= 0:
             return dic.user_id
         if 'created_at' not in dic.keys():
             return None
