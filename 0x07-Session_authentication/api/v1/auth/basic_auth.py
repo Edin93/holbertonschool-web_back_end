@@ -13,11 +13,6 @@ class BasicAuth(Auth):
     BasicAuth class.
     """
 
-    def __init__(self):
-        """ Constructor.
-        """
-        super().__init__()
-
     def extract_base64_authorization_header(self,
                                             authorization_header: str) -> str:
         """

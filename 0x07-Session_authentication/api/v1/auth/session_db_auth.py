@@ -9,11 +9,6 @@ class SessionDBAuth(SessionExpAuth):
     """ SessionDBAuth class
     """
 
-    def __init__(self):
-        """ Constructor.
-        """
-        super().__init__()
-
     def create_session(self, user_id=None):
         """
         Creates a session ID.
@@ -66,7 +61,10 @@ class SessionDBAuth(SessionExpAuth):
         if user_id is None:
             return None
 
-        user = self.get(user_id)
+        user = UserSession.search({
+            'user_id': user_id,
+            'session_id': session_id
+        })
         if not user:
             return None
-        user.remove()
+        user[0].remove()
