@@ -36,33 +36,33 @@ class SessionDBAuth(SessionExpAuth):
             return None
 
         UserSession.load_from_file()
-        found_user = UserSession.search({'session_id': session_id})
-
-        if not found_user:
+        user = UserSession.search({'session_id': session_id})
+        if not user:
             return None
 
-        found_user = found_user[0]
-        return found_user.user_id
+        user = user[0]
+        timing = timedelta(seconds=self.session_duration) + user['created_at']
+        if timing < datetime.now():
+            return None
+        return user.user_id
 
     def destroy_session(self, request=None):
         """
         Destroys the UserSession based on the Session ID
         from the request cookie.
         """
-        if request is None:
+        if not request:
             return False
 
         session_id = self.session_cookie(request)
-
-        if session_id is None:
+        if not session_id:
             return False
 
         user_id = user_id_for_session_id(session_id)
-        if user_id is None:
+        if not user_id:
             return False
 
         user = UserSession.search({
-            'user_id': user_id,
             'session_id': session_id
         })
         if not user:
