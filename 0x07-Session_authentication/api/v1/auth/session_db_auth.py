@@ -9,6 +9,11 @@ class SessionDBAuth(SessionExpAuth):
     """ SessionDBAuth class
     """
 
+    def __init__(self):
+        """ Constructor.
+        """
+        super().__init__()
+
     def create_session(self, user_id=None):
         """
         Creates a session ID.
@@ -24,7 +29,7 @@ class SessionDBAuth(SessionExpAuth):
             'session_id': session_id,
             'user_id': user_id
         }
-        user_session = UserSession(user_session_data)
+        user_session = UserSession(**user_session_data)
         user_session.save()
         return session_id
 

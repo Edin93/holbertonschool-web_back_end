@@ -16,10 +16,9 @@ class SessionAuth(Auth):
     user_id_by_session_id = {}
 
     def __init__(self):
+        """ Constructor.
         """
-        Constructor.
-        """
-        pass
+        super().__init__()
 
     def create_session(self, user_id: str = None) -> str:
         """

@@ -18,7 +18,6 @@ class SessionExpAuth(SessionAuth):
         """
         Constructor.
         """
-        super()
         if not getenv('SESSION_DURATION'):
             self.session_duration = 0
         else:
