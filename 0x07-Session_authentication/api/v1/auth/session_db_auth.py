@@ -3,6 +3,7 @@
 """
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
+from datetime import datetime, timedelta
 
 
 class SessionDBAuth(SessionExpAuth):
@@ -41,7 +42,7 @@ class SessionDBAuth(SessionExpAuth):
             return None
 
         user = user[0]
-        timing = timedelta(seconds=self.session_duration) + user['created_at']
+        timing = timedelta(seconds=self.session_duration) + user.created_at
         if timing < datetime.now():
             return None
         return user.user_id
