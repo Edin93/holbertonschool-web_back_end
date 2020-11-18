@@ -76,13 +76,13 @@ def user_get_reset_password_token():
     """
     Reset password token route.
     """
-    email = request.form['email']
-    try:
-        user = AUTH.find_user_by(email=email)
+    email = request.form.get('email', '')
+    user = AUTH.create_session(email)
+    if user:
         token = AUTH.get_reset_password_token(email)
         msg = {"email": user.email, "reset_token": token}
         return jsonify(msg)
-    except NoResultFound:
+    else:
         abort(403)
 
 
