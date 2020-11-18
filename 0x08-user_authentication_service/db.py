@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Contains the DB class.
+Contains DB class to handle data.
 """
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -32,8 +32,11 @@ class DB:
         Saves the user to the database and Returns the User object.
         """
         if email and hashed_password:
-            user = User()
-            user.email = email
-            user.hashed_password = hashed_password
+            user = User(
+                email=email,
+                hashed_password=hashed_password
+            )
+            self._session.add(user)
+            self._session.commit()
             return user
         return None
