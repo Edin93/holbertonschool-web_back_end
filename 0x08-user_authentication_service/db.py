@@ -47,7 +47,9 @@ class DB:
         Return the first row found in the users table as filtered
         by the passed arguments.
         """
-        valid_args = ['email', 'hashed_password', 'session_id', 'reset_token']
+        valid_args = [
+            'id', 'email', 'hashed_password', 'session_id', 'reset_token'
+        ]
         input_keys = kwargs.keys()
         for k in input_keys:
             if k not in valid_args:
