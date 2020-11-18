@@ -42,7 +42,7 @@ class DB:
             return user
         return None
 
-    def find_user_by(self, **kwargs: object) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """
         Return the first row found in the users table as filtered
         by the passed arguments.
