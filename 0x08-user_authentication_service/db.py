@@ -70,7 +70,7 @@ class DB:
         try:
             user = self.find_user_by(id=user_id)
             if user:
-                for k in kwargs.items():
+                for k, v in kwargs.items():
                     if k not in valid_args:
                         raise ValueError
                     else:
