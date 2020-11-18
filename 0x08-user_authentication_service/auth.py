@@ -5,7 +5,7 @@ Contains Authentication methods.
 import bcrypt
 
 
-def _hash_password(password: str) -> bytes:
+def _hash_password(password: str) -> str:
     """
     Hashes a password with bcrypt.hashpw
     """
