@@ -67,9 +67,8 @@ class DB:
         valid_args = [
             'id', 'email', 'hashed_password', 'session_id', 'reset_token'
         ]
-
         try:
-            user = self.find_user_by(user_id)
+            user = self.find_user_by(id=user_id)
             if user:
                 for k in kwargs.items():
                     if k not in valid_args:
@@ -78,4 +77,4 @@ class DB:
                         setattr(user, k, v)
                 self._session.commit()
         except Exception as e:
-            return None
+            raise e
