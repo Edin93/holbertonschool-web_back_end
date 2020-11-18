@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from flask import Flask, jsonify, request, make_response, abort, redirect
 from auth import Auth
+from sqlalchemy.orm.exc import NoResultFound
 
 
 app = Flask(__name__)
@@ -67,6 +68,21 @@ def profile() -> str:
     if user:
         return jsonify({"email": user.email}), 200
     else:
+        abort(403)
+
+
+@app.route('/reset_password', methods=['POST'], strict_slashes=False)
+def get_reset_password_token():
+    """
+    Reset password token route.
+    """
+    email = request.form['email']
+    try:
+        user = AUTH.find_user_by(email=email)
+        token = AUTH.get_reset_password_token(email)
+        msg = {"email": user.email, "reset_token": token}
+        return jsonify(msg)
+    except NoResultFound:
         abort(403)
 
 
