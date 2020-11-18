@@ -69,12 +69,13 @@ class DB:
         ]
 
         try:
-            user = self.find_user_by({user_id: user_id})
+            user = self.find_user_by(user_id)
+            if user:
+                for k in kwargs.items():
+                    if k not in valid_args:
+                        raise ValueError
+                    else:
+                        setattr(user, k, v)
+                self._session.commit()
         except Exception as e:
             return None
-
-        for k in kwargs.keys():
-            if k not in valid_args:
-                raise ValueError
-
-        user.update(**kwargs)
