@@ -58,7 +58,7 @@ def logout():
 
 
 @app.route('/profile', methods=['GET'], strict_slashes=False)
-def profile():
+def profile() -> str:
     """
     Get existing user email.
     """
