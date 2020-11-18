@@ -40,7 +40,7 @@ def login():
         res.set_cookie('session_id', session_id)
         return res
     else:
-        abort(404)
+        abort(401)
 
 
 if __name__ == "__main__":
