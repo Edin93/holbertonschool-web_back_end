@@ -58,3 +58,23 @@ class DB:
         if user is None:
             raise NoResultFound
         return user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        Find user by user_id and updates its data.
+        Returns None
+        """
+        valid_args = [
+            'id', 'email', 'hashed_password', 'session_id', 'reset_token'
+        ]
+
+        try:
+            user = self.find_user_by({user_id: user_id})
+        except Exception as e:
+            return None
+
+        for k in kwargs.keys():
+            if k not in valid_args:
+                raise ValueError
+
+        user.update(**kwargs)
