@@ -118,5 +118,5 @@ class Auth:
             hpw = _hash_password(password)
             self._db.update_user(user.id, hashed_password=hpw)
             self._db.update_user(user.id, reset_token=None)
-        except Exception:
+        except NoResultFound:
             raise ValueError
