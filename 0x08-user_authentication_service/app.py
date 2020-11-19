@@ -102,11 +102,10 @@ def update_password():
         - if valid reset_token, returns email of updated user + validation msg
         - if not valid reset_token, abort with 403.
     """
+    email = request.form.get('email', '')
+    reset_token = request.form.get('reset_token', '')
+    new_password = request.form.get('new_password', '')
     try:
-        email = request.form.get('email', '')
-        reset_token = request.form.get('reset_token', '')
-        new_password = request.form.get('new_password', '')
-        user = AUTH._db.find_user_by(email=email)
         AUTH.update_password(reset_token, new_password)
         return jsonify({"email": email, "message": "Password updated"}), 200
     except Exception:
