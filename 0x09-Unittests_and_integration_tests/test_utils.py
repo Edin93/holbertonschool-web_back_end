@@ -4,7 +4,7 @@ Module test cases.
 """
 import requests
 import unittest
-from unittest import mock
+from unittest.mock import patch, Mock
 from parameterized import parameterized
 from utils import access_nested_map, get_json
 
@@ -42,14 +42,14 @@ class TestGetJson(unittest.TestCase):
     '''
 
     @parameterized.expand([
-        ('http://example.com', {"payload": True}),
-        ('http://holberton.io', {"payload": False})
+        ('http://example.com', {"test_payload": True}),
+        # ('http://holberton.io', {"test_payload": False})
     ])
-    def test_get_json(self, url, expected_result):
+    def test_get_json(self, test_url, test_payload):
         '''
             Tests if get_json function returns the expected result.
         '''
-        with mock.patch('utils.requests') as mock_request:
-            mock_request.get.return_value = expected_result
-            x = mock_request.get(url)
-            self.assertEqual(expected_result, x)
+        with patch('requests.get') as mock:
+            mock.return_value.json.return_value = test_payload
+            self.assertEqual(get_json(test_url), test_payload)
+            mock.assert_called_once()
