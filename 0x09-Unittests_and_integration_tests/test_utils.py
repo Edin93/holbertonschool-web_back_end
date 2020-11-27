@@ -4,14 +4,14 @@ Module test cases.
 """
 import requests
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch, Mock, PropertyMock
 from parameterized import parameterized
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
     '''
-    access_nested_map tests.
+    utils.access_nested_map tests.
     '''
 
     @parameterized.expand([
@@ -38,7 +38,7 @@ class TestAccessNestedMap(unittest.TestCase):
 
 class TestGetJson(unittest.TestCase):
     '''
-    get_json tests.
+    utils.get_json tests.
     '''
 
     @parameterized.expand([
@@ -53,3 +53,30 @@ class TestGetJson(unittest.TestCase):
             mock.return_value.json.return_value = test_payload
             self.assertEqual(get_json(test_url), test_payload)
             mock.assert_called_once()
+
+
+class TestMemoize(unittest.TestCase):
+    """
+    utils.memoize tests.
+    """
+    def test_memoize(self):
+        '''
+            Test memoize function for functional memoization.
+        '''
+        class TestClass:
+            ''' TestClass for memoize testing. '''
+            def a_method(self):
+                ''' Returns 42. '''
+                return 42
+
+            @memoize
+            def a_property(self):
+                ''' Returns the class a_method result. '''
+                return self.a_method()
+
+        with patch.object(TestClass, 'a_method') as am:
+            am.return_value = 42
+            tc = TestClass()
+            self.assertEqual(tc.a_property, am.return_value)
+            self.assertEqual(tc.a_property, am.return_value)
+            am.assert_called_once()
