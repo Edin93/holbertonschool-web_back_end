@@ -27,10 +27,10 @@ def get_locale():
     return locale
 
 
-app.config.from_object('3-app.Config')
+app.config.from_object('4-app.Config')
 
 
 @app.route('/')
 def default():
-    """ Returns a 3-index.html template """
+    """ Returns a 4-index.html template """
     return render_template('4-index.html')
