@@ -13,12 +13,10 @@ babel = Babel(app)
 class Config:
     ''' flask app Config class. '''
     LANGUAGES = ["en", "fr"]
-    default_locale = 'en'
-    default_timezone = 'UTC'
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 
-# babel._default_locale = Config.default_locale
-# babel._default_timezone = Config.default_timezone
 app.config.from_object('1-app.Config')
 
 
