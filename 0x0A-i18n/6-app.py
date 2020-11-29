@@ -25,19 +25,22 @@ class Config:
 
 
 @babel.localeselector
-def get_locale() -> str:
+def get_locale():
     """ Determine the best match with our supported languages. """
     locale = request.args.get('locale')
-    if locale is not None and locale in Config.LANGUAGES:
+    if locale and locale in app.config['LANGUAGES']:
         return locale
-    locale = request.accept_languages.best_match(Config.LANGUAGES)
+    locale = request.headers.get('locale')
+    if locale and locale in app.config.('LANGUAGES'):
+        return locale
+    locale = request.accept_languages.best_match(app.config['LANGUAGES'])
     return locale
 
 
 app.config.from_object('6-app.Config')
 
 
-def get_user() -> Union[dict, None]:
+def get_user():
     ''' Returns a user dictionary or None, if the user doesn't exist. '''
     user_id = int(request.args.get('login_as'))
     if user_id and user_id in users:
@@ -54,6 +57,6 @@ def before_request():
 
 
 @app.route('/')
-def default() -> str:
+def default():
     """ Returns a 6-index.html template """
     return render_template('6-index.html')
