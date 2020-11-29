@@ -15,16 +15,18 @@ class Config:
     ''' Language Config class. '''
     LANGUAGES = ["en", "fr"]
 
-    @babel.localeselector
-    def get_locale():
-        """ Returns requested language. """
-        requested_lang = request.args.get('lang')
-        if not requested_lang:
-            return 'en'
 
-    @babel.timezoneselector
-    def get_timezone():
-        """ Returns requested timezone. """
-        requested_tz = request.args.get('timezone')
-        if not requested_tz:
-            return 'UTC'
+@babel.localeselector
+def get_locale():
+    """ Returns requested language. """
+    requested_lang = request.args.get('lang')
+    if not requested_lang:
+        return 'en'
+
+
+@babel.timezoneselector
+def get_timezone():
+    """ Returns requested timezone. """
+    requested_tz = request.args.get('timezone')
+    if not requested_tz:
+        return 'UTC'
