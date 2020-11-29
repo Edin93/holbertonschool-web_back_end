@@ -4,11 +4,12 @@ Flask application
 """
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, gettext
-from typing import Union
 
 
 app = Flask(__name__)
 babel = Babel(app)
+
+
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
     2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
@@ -49,8 +50,7 @@ def get_user():
 def before_request():
     ''' Handles request before making the request to the API. '''
     user = get_user()
-    if user:
-        g.user = user
+    g.user = user
 
 
 @app.route('/')

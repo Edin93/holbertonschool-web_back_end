@@ -9,6 +9,8 @@ from typing import Union
 
 app = Flask(__name__)
 babel = Babel(app)
+
+
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
     2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
@@ -28,9 +30,9 @@ class Config:
 def get_locale():
     """ Determine the best match with our supported languages. """
     locale = request.args.get('locale')
-    if locale is not None and locale in Config.LANGUAGES:
+    if locale is not None and locale in app.config['LANGUAGES']:
         return locale
-    locale = request.accept_languages.best_match(app.config.get('LANGUAGES'))
+    locale = request.accept_languages.best_match(app.config.['LANGUAGES'])
     return locale
 
 
