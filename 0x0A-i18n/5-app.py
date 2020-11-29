@@ -38,9 +38,9 @@ app.config.from_object('5-app.Config')
 
 def get_user():
     ''' Returns a user dictionary or None, if the user doesn't exist. '''
-    user_id = request.args.get('login_as')
+    user_id = int(request.args.get('login_as'))
     if user_id and user_id in users:
-        return users[int(user_id)]
+        return users[user_id]
     else:
         return None
 
@@ -51,7 +51,6 @@ def before_request():
     user = get_user()
     if user:
         g.user = user
-    g.user = users[4]
 
 
 @app.route('/')
