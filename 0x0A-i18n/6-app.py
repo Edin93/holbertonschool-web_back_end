@@ -28,10 +28,7 @@ class Config:
 def get_locale():
     """ Determine the best match with our supported languages. """
     locale = request.args.get('locale')
-    if locale and locale in app.config['LANGUAGES']:
-        return locale
-    locale = request.headers.get('locale')
-    if locale and locale in app.config.('LANGUAGES'):
+    if locale is not None and locale in app.config['LANGUAGES']:
         return locale
     locale = request.accept_languages.best_match(app.config['LANGUAGES'])
     return locale
