@@ -30,10 +30,10 @@ app.config.from_object('3-app.Config')
 @app.route('/')
 def default():
     """ Returns a 3-index.html template """
-    home_title = gettext('home_title')
-    home_header = gettext('home_header')
+    # home_title = gettext('home_title')
+    # home_header = gettext('home_header')
     return render_template(
         '3-index.html',
-        home_title=home_title,
-        home_header=home_header
+        # home_title=home_title,
+        # home_header=home_header
     )
