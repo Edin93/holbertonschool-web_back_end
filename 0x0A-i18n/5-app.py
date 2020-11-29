@@ -4,6 +4,7 @@ Flask application
 """
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, gettext
+from typing import Union
 
 
 app = Flask(__name__)
@@ -24,7 +25,7 @@ class Config:
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """ Determine the best match with our supported languages. """
     locale = request.args.get('locale')
     if locale is not None and locale in Config.LANGUAGES:
@@ -36,17 +37,16 @@ def get_locale():
 app.config.from_object('5-app.Config')
 
 
-def get_user():
+def get_user() -> Union[dict, None]:
     ''' Returns a user dictionary or None, if the user doesn't exist. '''
     user_id = int(request.args.get('login_as'))
     if user_id and user_id in users:
         return users[user_id]
-    else:
-        return None
+    return None
 
 
 @app.before_request
-def before_request():
+def before_request() -> None:
     ''' Handles request before making the request to the API. '''
     user = get_user()
     if user:
@@ -54,6 +54,6 @@ def before_request():
 
 
 @app.route('/')
-def default():
+def default() -> str:
     """ Returns a 5-index.html template """
     return render_template('5-index.html')
