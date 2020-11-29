@@ -46,7 +46,7 @@ def get_user() -> Union[dict, None]:
 
 
 @app.before_request
-def before_request() -> None:
+def before_request():
     ''' Handles request before making the request to the API. '''
     user = get_user()
     if user:
