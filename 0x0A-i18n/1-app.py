@@ -20,3 +20,9 @@ class Config:
 babel._default_locale = Config.default_locale
 babel._default_timezone = Config.default_timezone
 app.config.from_object('1-app.Config')
+
+
+@app.route('/')
+def default():
+    """ Returns a 1-index.html template """
+    return render_template('1-index.html')
