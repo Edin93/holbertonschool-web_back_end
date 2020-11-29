@@ -8,11 +8,16 @@ from flask_babel import Babel
 
 app = Flask(__name__)
 babel = Babel(app)
-app.config.from_object(Config)
 
 
 class Config:
     ''' flask app Config class. '''
     LANGUAGES = ["en", "fr"]
-    babel._default_locale = 'en'
-    babel._default_timezone = 'UTC'
+    default_locale = 'en'
+    default_timezone = 'UTC'
+
+
+cfg = Config()
+app.config.from_object(cfg)
+babel.default_locale = cfg.default_locale
+babel.default_timezone = cfg.default_timezone
