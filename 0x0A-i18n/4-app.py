@@ -20,8 +20,11 @@ class Config:
 @babel.localeselector
 def get_locale():
     """ Determine the best match with our supported languages. """
-    requested_lang = request.accept_languages.best_match(Config.LANGUAGES)
-    return requested_lang
+    locale = request.args.get('locale')
+    if locale is not None and locale in Config.LANGUAGES:
+        return locale
+    locale = request.accept_languages.best_match(Config.LANGUAGES)
+    return locale
 
 
 app.config.from_object('3-app.Config')
@@ -30,4 +33,4 @@ app.config.from_object('3-app.Config')
 @app.route('/')
 def default():
     """ Returns a 3-index.html template """
-    return render_template('3-index.html')
+    return render_template('4-index.html')
