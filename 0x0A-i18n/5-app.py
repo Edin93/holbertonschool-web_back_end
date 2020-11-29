@@ -30,7 +30,7 @@ def get_locale() -> str:
     locale = request.args.get('locale')
     if locale is not None and locale in Config.LANGUAGES:
         return locale
-    locale = request.accept_languages.best_match(Config.LANGUAGES)
+    locale = request.accept_languages.best_match(app.config.get('LANGUAGES'))
     return locale
 
 
@@ -46,7 +46,7 @@ def get_user() -> Union[dict, None]:
 
 
 @app.before_request
-def before_request():
+def before_request() -> None:
     ''' Handles request before making the request to the API. '''
     user = get_user()
     if user:
