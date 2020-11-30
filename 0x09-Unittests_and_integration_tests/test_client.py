@@ -22,3 +22,12 @@ class TestGithubOrgClient(unittest.TestCase):
         r = GithubOrgClient(url)
         self.assertEqual(r.org, expected)
         mock.assert_called_once()
+
+    def test_public_repos_url(self):
+        """ Tests if GithubOrgClient._public_repos_url result is correct """
+        with patch('client.GithubOrgClient.org',
+             new_callable=PropertyMock) as mock:
+            mock.return_value = {'repos_url': 'http://mock.url'}
+            gc = GithubOrgClient('xyz')
+            r = gc._public_repos_url
+            self.assertEqual(r, mock.return_value.get('repos_url'))
