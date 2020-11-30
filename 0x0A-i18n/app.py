@@ -4,6 +4,9 @@ Flask application
 """
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, gettext
+import pytz
+from datetime import datetime
+from babel.dates import format_datetime
 
 
 app = Flask(__name__)
@@ -35,7 +38,21 @@ def get_locale():
     return locale
 
 
-app.config.from_object('6-app.Config')
+@babel.timezoneselector
+def get_timezone():
+    """ Determines the appropriate user timezone. """
+    user_timezone = request.args.get('timezone', None)
+    if not user_timezone and g.user:
+        user_timezone = g.user.get('timezone')
+    if user_timezone:
+        try:
+            return pytz.timezone(user_timezone)
+        except pytz.exceptions.UnknownTimeZoneError as e:
+            pass
+    return pytz.timezone(app.config['BABEL_DEFAULT_TIMEZONE'])
+
+
+app.config.from_object('app.Config')
 
 
 def get_user():
@@ -51,9 +68,11 @@ def before_request():
     ''' Handles request before making the request to the API. '''
     user = get_user()
     g.user = user
+    dt = datetime.now(get_timezone())
+    g.current_time = format_datetime(dt)
 
 
 @app.route('/')
 def default():
-    """ Returns a 6-index.html template """
-    return render_template('6-index.html')
+    """ Returns a index.html template """
+    return render_template('index.html')

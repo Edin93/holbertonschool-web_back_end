@@ -44,11 +44,10 @@ def get_timezone():
         user_timezone = g.user.get('timezone')
     if user_timezone:
         try:
-            pytz.timezone(user_timezone)
-            return user_timezone
+            return pytz.timezone(user_timezone)
         except pytz.exceptions.UnknownTimeZoneError as e:
             pass
-    return app.config['BABEL_DEFAULT_TIMEZONE']
+    return pytz.timezone(app.config['BABEL_DEFAULT_TIMEZONE'])
 
 
 app.config.from_object('7-app.Config')
