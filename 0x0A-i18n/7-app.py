@@ -4,6 +4,7 @@ Flask application
 """
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, gettext
+import pytz
 
 
 app = Flask(__name__)
@@ -35,14 +36,29 @@ def get_locale():
     return locale
 
 
+@babel.timezoneselector
+def get_timezone():
+    """ Determines the appropriate user timezone. """
+    user_timezone = request.args.get('timezone', None)
+    if not user_timezone and g.user:
+        user_timezone = g.user.get('timezone')
+    if user_timezone:
+        try:
+            pytz.timezone(user_timezone)
+            return user_timezone
+        except pytz.exceptions.UnknownTimeZoneError as e:
+            pass
+    return app.config['BABEL_DEFAULT_TIMEZONE']
+
+
 app.config.from_object('7-app.Config')
 
 
 def get_user():
     ''' Returns a user dictionary or None, if the user doesn't exist. '''
-    user_id = int(request.args.get('login_as'))
-    if user_id and user_id in users:
-        return users[user_id]
+    user_id = request.args.get('login_as')
+    if user_id and int(user_id) in users:
+        return users[int(user_id)]
     return None
 
 
