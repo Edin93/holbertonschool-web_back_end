@@ -40,9 +40,9 @@ app.config.from_object('6-app.Config')
 
 def get_user():
     ''' Returns a user dictionary or None, if the user doesn't exist. '''
-    user_id = int(request.args.get('login_as'))
-    if user_id and user_id in users:
-        return users[user_id]
+    user_id = request.args.get('login_as')
+    if user_id and int(user_id) in users:
+        return users[int(user_id)]
     return None
 
 
