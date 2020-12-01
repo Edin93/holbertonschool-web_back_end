@@ -4,8 +4,10 @@ Module test cases.
 """
 import unittest
 from unittest.mock import patch, Mock, PropertyMock
-from parameterized import parameterized
+from parameterized import parameterized, parameterized_class
 from client import GithubOrgClient
+from fixtures import TEST_PAYLOAD
+import requests
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -70,3 +72,30 @@ class TestGithubOrgClient(unittest.TestCase):
             GithubOrgClient.has_license(repo, license_key),
             expected_result
         )
+
+
+@parameterized_class(
+    ('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'),
+    TEST_PAYLOAD
+)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """ Integration test Class for GithubOrgClient.public_repos method. """
+
+    @classmethod
+    def setUpClass(cls):
+        """ setUpClass method. """
+        cls.get_patcher = patch(
+            'requests.get',
+            side_effect=[
+                org_payload,
+                repos_payload,
+                expected_repos,
+                apache2_repos
+            ]
+        )
+        cls.get_patcher.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        """ tearDownClass method. """
+        cls.get_patcher.stop()
