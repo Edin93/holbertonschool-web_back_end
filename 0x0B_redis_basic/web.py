@@ -30,9 +30,9 @@ def count_url_requests(method: Callable) -> Callable:
 
 
 @count_url_requests
-def get_page(url: str) -> str:
+def get_page(url: str) -> bytes:
     """
         Returns the HTML of a particular URL.
     """
     response = requests.get(url)
-    return response.content.decode('utf-8')
+    return response.text.encode('utf-8')
