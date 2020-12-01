@@ -50,16 +50,6 @@ def replay(func: Callable):
     if calls_number == 1:
         times_str = 'time'
     msg = '{} was called {} {}:'.format(method_name, calls_number, times_str)
-    # for i in range(calls_number):
-    #     k = inputs[i]
-    #     v = outputs[i]
-    #     msg += '{}(*{}) -> {}'.format(
-    #         method_name,
-    #         k.decode('utf-8'),
-    #         v.decode('utf-8')
-    #     )
-    #     if i < calls_number - 1:
-    #         msg += '\n'
     print(msg)
     for k, v in zip(inputs, outputs):
         msg = '{}(*{}) -> {}'.format(
