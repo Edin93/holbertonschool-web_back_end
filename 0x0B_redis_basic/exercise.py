@@ -3,15 +3,14 @@
 Redis caching module.
 """
 import redis
-from typing import Union
 import uuid
+from typing import Union
 
 
 class Cache:
     """
         Redis caching class.
     """
-
     def __init__(self):
         """
             Cache class initialization.
@@ -23,6 +22,6 @@ class Cache:
         """
             Stores the input data in Redis under a randomly generated key
         """
-        random_key = str(uuid.uuid4())
+        random_key = str(uuid4())
         self._redis.set(random_key, data)
         return random_key
