@@ -57,7 +57,7 @@ def replay(func: Callable):
         )
         if i < calls_number - 1:
             msg += '\n'
-    return msg
+    print(msg)
 
 
 class Cache:
