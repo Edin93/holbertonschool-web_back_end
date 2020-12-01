@@ -50,10 +50,10 @@ def replay(func: Callable):
     for i in range(calls_number):
         k = inputs[i]
         v = outputs[i]
-        msg += '{}({}) -> {}'.format(
+        msg += '{}(*{}) -> {}'.format(
             method_name,
-            k,
-            v
+            k.decode('utf-8'),
+            v.decode('utf-8')
         )
         if i < calls_number - 1:
             msg += '\n'
