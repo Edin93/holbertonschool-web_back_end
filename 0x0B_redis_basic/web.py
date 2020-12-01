@@ -35,4 +35,4 @@ def get_page(url: str) -> str:
         Returns the HTML of a particular URL.
     """
     response = requests.get(url)
-    return response.text
+    return response.content.decode('utf-8')
