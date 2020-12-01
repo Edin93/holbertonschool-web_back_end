@@ -27,7 +27,10 @@ class Cache:
         self._redis.set(random_key, data)
         return random_key
 
-    def get(self, key: str, fn: Optional[Callable]) -> None:
+    def get(
+        self,
+        key: str, fn: Optional[Callable]
+    ) -> Union[str, bytes, int, float]:
         result = self._redis.get(key)
         if fn:
             return fn(result)
