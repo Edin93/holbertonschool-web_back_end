@@ -29,8 +29,12 @@ class Cache:
 
     def get(
         self,
-        key: str, fn: Optional[Callable]
+        key: str,
+        fn: Optional[Callable] = None
     ) -> Union[str, bytes, int, float]:
+        """
+            Return the key's value, if fn is passed it'll convert it.
+        """
         result = self._redis.get(key)
         if fn:
             return fn(result)
