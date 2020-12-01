@@ -46,18 +46,28 @@ def replay(func: Callable):
     inputs = r.lrange("{}:inputs".format(method_name), 0, -1)
     outputs = r.lrange("{}:outputs".format(method_name), 0, -1)
     calls_number = len(inputs)
-    msg = '{} was called {} times:\n'.format(method_name, calls_number)
-    for i in range(calls_number):
-        k = inputs[i]
-        v = outputs[i]
-        msg += '{}(*{}) -> {}'.format(
+    times_str = 'times'
+    if calls_number == 1:
+        times_str = 'time'
+    msg = '{} was called {} {}:'.format(method_name, calls_number, times_str)
+    # for i in range(calls_number):
+    #     k = inputs[i]
+    #     v = outputs[i]
+    #     msg += '{}(*{}) -> {}'.format(
+    #         method_name,
+    #         k.decode('utf-8'),
+    #         v.decode('utf-8')
+    #     )
+    #     if i < calls_number - 1:
+    #         msg += '\n'
+    print(msg)
+    for k, v in zip(inputs, outputs):
+        msg = '{}(*{}) -> {}'.format(
             method_name,
             k.decode('utf-8'),
             v.decode('utf-8')
         )
-        if i < calls_number - 1:
-            msg += '\n'
-    print(msg)
+        print(msg)
 
 
 class Cache:
