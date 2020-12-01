@@ -88,9 +88,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
             'requests.get',
             side_effect=[
                 org_payload,
-                repos_payload,
-                expected_repos,
-                apache2_repos
+                repos_payload
             ]
         )
         cls.get_patcher.start()
@@ -99,3 +97,14 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     def tearDownClass(cls):
         """ tearDownClass method. """
         cls.get_patcher.stop()
+
+    def test_public_repos(self):
+        """ Testing GithubOrgClient.public_repos """
+        ghoc = GithubOrgClient('random')
+        self.assertEqual(ghoc.org, self.org_payload)
+        self.assertEqual(ghoc.repos_payload, self.repos_payload)
+
+    def test_public_repos_with_license():
+        """ Testing public_repos with the argument license="apache-2.0" """
+        ghoc = client.GithubOrgClient('random')
+        self.assertEqual(ghoc.public_repos('apache-2.0'), self.apache2_repos)
