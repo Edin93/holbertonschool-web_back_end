@@ -3,14 +3,15 @@
 Redis caching module.
 """
 import redis
-import uuid
 from typing import Union
+import uuid
 
 
 class Cache:
     """
         Redis caching class.
     """
+
     def __init__(self):
         """
             Cache class initialization.
