@@ -39,3 +39,15 @@ class Cache:
         if fn:
             return fn(result)
         return result
+
+    def get_str(self, key):
+        """
+            Return key value as a string.
+        """
+        return get(key, str)
+
+    def get_int(self, key):
+        """
+            Return key value as an integer.
+        """
+        return get(key, int)
