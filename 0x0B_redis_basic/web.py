@@ -21,8 +21,6 @@ def count_url_requests(method: Callable) -> Callable:
         """ Function wrapper """
         url = args[0]
         name = 'count: ' + '{' + url + '}'
-        if r.get(name):
-            return method(url)
         r.incr(name, amount=1)
         r.expire(name, 10)
         return method(url)
