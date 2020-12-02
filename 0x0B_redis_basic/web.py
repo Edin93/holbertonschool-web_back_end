@@ -8,22 +8,21 @@ from functools import wraps
 from typing import Callable
 
 
+r = redis.Redis()
+
+
 def count_url_requests(method: Callable) -> Callable:
     """
         Counts how many times a url has been requested.
         Cache it in redis under the key 'count: {url}'
         with an expiration time of 10 seconds.
     """
-    r = redis.Redis()
-
     @wraps(method)
     def wrapper(*args, **kwargs):
         """ Function wrapper """
         url = args[0]
         name = 'count: ' + '{' + url + '}'
         r.incrby(name, 1)
-        if r.get(name):
-            return method(url)
         r.expire(name, 10)
         return method(url)
     return wrapper
