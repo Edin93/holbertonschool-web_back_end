@@ -1,7 +1,6 @@
-#!/usr/bin/ehv python3
+#!/usr/bin/env python3
 """
-Module contains a function that inserts a new document in a
-collection based on kwargs.
+Module contains a function that inserts a new document in acollection.
 """
 
 
