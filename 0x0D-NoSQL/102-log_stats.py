@@ -34,6 +34,27 @@ def log_infos() -> None:
         )
     )
 
+    print("IPs:")
+
+    ips = []
+
+
+    top_ips = nginx.aggregate([
+        { "$group": {  "_id" : "$ip", "total" : { "$sum": 1 }  } },
+        { "$sort": { "total": -1 } }
+    ])
+
+    i = 0
+    for ip in top_ips:
+        if i == 10:
+            break
+        print(
+            "\t{}: {}".format(
+                ip.get('_id'),
+                ip.get('total')
+            )
+        )
+        i += 1
 
 if __name__ == "__main__":
     log_infos()
