@@ -1,8 +1,12 @@
 export default function createIteratorObject(report) {
-	
-}
+  let allEmployees = [];
 
-const report = createReportObject({});
-const reportWithIterator = createIteratorObject(report);
-console.log('-------------------------');
-console.log(typeof reportWithIterator[Symbol.iterator]);
+  for (const value of Object.values(report.allEmployees)) {
+    allEmployees = [
+      ...allEmployees,
+      ...value,
+    ];
+  }
+
+  return allEmployees;
+}
