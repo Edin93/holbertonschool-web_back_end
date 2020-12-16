@@ -13,7 +13,7 @@ export default async function asyncUploadUser() {
       firstName: data[1].firstName,
       lastname: data[1].lastName,
     },
-  })).catch((error) => ({
+  })).catch(() => ({
     photo: null,
     user: null,
   }));
