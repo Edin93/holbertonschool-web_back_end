@@ -5,7 +5,7 @@ export default function guardrail(mathFunction) {
   try {
     result = mathFunction();
   } catch (e) {
-    result = e;
+    result = `${e.name}: ${e.message}`;
   }
 
   queue.push(result);
