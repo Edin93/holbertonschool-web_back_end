@@ -30,7 +30,16 @@ export default class HolbertonCourse {
   }
 
   set students(students) {
-    if (students) {
+    let areValidStudents = true;
+    for (let i = 0; i < students.length; i += 1) {
+      if (typeof students[i] !== 'string') {
+        areValidStudents = false;
+        break;
+      }
+    }
+    if (!areValidStudents) {
+      throw TypeError('Students array must be a strings');
+    } else {
       this._students = students;
     }
   }
