@@ -1,6 +1,6 @@
 export default function cleanSet(set, startString) {
-  if (!startString) return '';
-  if (typeof startString !== 'string') return '';
+	if (typeof startString !== 'string') return '';
+	if (startString.length === 0) return '';
   if (!(set instanceof Set)) return '';
   const str = [];
   set.forEach((el) => {
