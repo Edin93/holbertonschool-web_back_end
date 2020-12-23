@@ -1,10 +1,12 @@
 export default function cleanSet(set, startString) {
   let str = '';
-  if (startString === '') return '';
+  let len = 0;
+  if (!startString.length) return '';
   set.forEach((el) => {
     if (el.startsWith(startString)) {
       str += `${el.substring(startString.length)}-`;
     }
   });
-  return str.substr(0, str.length - 1);
+  len = str.length;
+  return str.substring(0, len - 1);
 }
