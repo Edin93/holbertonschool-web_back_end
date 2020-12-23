@@ -3,15 +3,14 @@ export default function cleanSet(set, startString) {
     return '';
   }
   let str = '';
-  let i = 0;
-  set.forEach((el) => {
+	let i = 0;
+	for (let el of set) {
     i += 1;
     if (el.startsWith(startString)) {
       str += `${el.substring(startString.length)}`;
       if (i !== set.size - 1) {
         str += '-';
-      }
-    }
-  });
+      }		
+	}
   return str;
 }
