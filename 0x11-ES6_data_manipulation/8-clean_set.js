@@ -7,7 +7,7 @@ export default function cleanSet(set, startString) {
   for (const el of set) {
     i += 1;
     if (el.startsWith(startString)) {
-      str += `${el.substring(startString.length)}`;
+      str += `${el.substr(startString.length)}`;
       if (i !== set.size - 1) {
         str += '-';
       }
