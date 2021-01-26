@@ -1,6 +1,6 @@
 const calculateNumber = require("./2-calcul_chai");
-const chai = require('chai');
-const except = chai.expect;
+let chai = require('chai');
+let except = chai.expect;
 
 describe("calculateNumber", () => {
 	except(4).to.equal(calculateNumber('SUM', 1, 3));
