@@ -10,18 +10,13 @@ const app = http.createServer(async (req, res) => {
     res.end('Hello Holberton School!');
   } else if (req.url === '/students') {
     let dbInfo = 'This is the list of our students\n';
-
-    // console.log('------------------------');
-
     await countStudents(process.argv[2])
       .then((msg) => {
         dbInfo += msg;
         res.end(dbInfo);
-        // console.log('------------------------');
-        // console.log(msg);
       })
       .catch((err) => {
-        dbInfo += err;
+        dbInfo += err.message;
         res.end(dbInfo);
       });
   }
