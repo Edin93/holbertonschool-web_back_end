@@ -29,6 +29,9 @@ async function countStudents(path) {
           }
           i += 1;
         }
+        if (i >= 1) {
+          i -= 1;
+        }
       };
 
       const display = async () => {
@@ -37,7 +40,7 @@ async function countStudents(path) {
         for (const field of Object.keys(fields)) {
           const n = fields[field].count;
           const names = fields[field].students.join(', ');
-          console.log(`Number of students in ${n}: 6. List: ${names}`);
+          console.log(`Number of students in ${field}: ${n}. List: ${names}`);
         }
       };
 
